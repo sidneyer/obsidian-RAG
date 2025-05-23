@@ -1,0 +1,10 @@
+{
+    "id": "obsidian-rag",
+    "name": "Obsidian RAG",
+    "version": "0.1.0",
+    "minAppVersion": "1.0.0",
+    "description": "Chat with your vault using local RAG and LLMs",
+    "author": "Obsidian RAG Contributors",
+    "authorUrl": "https://github.com/yourusername/obsidian-rag",
+    "isDesktopOnly": true
+} 

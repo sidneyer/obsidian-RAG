@@ -1,0 +1,33 @@
+{
+    "server": {
+        "host": "0.0.0.0",
+        "port": 8000,
+        "debug": false,
+        "workers": 1
+    },
+    "llm": {
+        "model_path": "models/llama-2-7b-chat.Q4_K_M.gguf",
+        "context_size": 2048,
+        "max_tokens": 512,
+        "temperature": 0.7,
+        "use_neural_engine": true,
+        "cache_dir": "cache"
+    },
+    "embeddings": {
+        "model_name": "all-MiniLM-L6-v2",
+        "cache_dir": "embeddings_cache",
+        "batch_size": 32,
+        "use_neural_engine": true
+    },
+    "processing": {
+        "chunk_size": 500,
+        "chunk_overlap": 50,
+        "preserve_markdown": true,
+        "supported_extensions": [".md", ".markdown", ".pdf", ".doc", ".docx"]
+    },
+    "security": {
+        "api_key_required": false,
+        "api_key": "",
+        "allowed_origins": ["http://localhost:*", "app://obsidian.md"]
+    }
+} 

@@ -1,0 +1,41 @@
+version: '3.8'
+
+services:
+  server:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        BUILDPLATFORM: ${DOCKER_DEFAULT_PLATFORM:-linux/arm64}  # Default to ARM64 for Apple Silicon
+    platform: ${DOCKER_DEFAULT_PLATFORM:-linux/arm64}  # Default to ARM64 for Apple Silicon
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./server/models:/app/models
+      - ./server/data:/app/data
+      - ./server/config:/app/config
+    environment:
+      - PYTHONUNBUFFERED=1
+      - CUDA_VISIBLE_DEVICES=  # Leave empty to use CPU only
+      - METAL_DEVICE=1  # For Apple Silicon
+      - LLAMA_METAL=1  # Enable Metal support
+      - COREML_DEVICE=1  # Enable Neural Engine
+    deploy:
+      resources:
+        limits:
+          memory: 8G  # Adjust based on your needs
+          cpus: '0.75'  # Use up to 75% of CPU cores
+        reservations:
+          memory: 4G
+          cpus: '0.25'  # Minimum 25% of CPU cores
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 30s
+    security_opt:
+      - seccomp:unconfined  # Required for Apple Silicon support
+    devices:
+      - /dev/null:/dev/null  # Required for Apple Silicon GPU access

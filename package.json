@@ -1,0 +1,29 @@
+{
+    "name": "obsidian-rag-monorepo",
+    "version": "0.1.0",
+    "description": "Local RAG system for Obsidian with Apple Silicon optimization",
+    "private": true,
+    "workspaces": [
+        "plugin",
+        "server"
+    ],
+    "scripts": {
+        "build": "npm run build:server && npm run build:plugin",
+        "build:plugin": "cd plugin && npm install && npm run build",
+        "build:server": "cd server && pip install -r requirements.txt",
+        "dev": "concurrently \"npm run dev:server\" \"npm run dev:plugin\"",
+        "dev:plugin": "cd plugin && npm run dev",
+        "dev:server": "cd server && python src/main.py",
+        "test": "npm run test:plugin && npm run test:server",
+        "test:plugin": "cd plugin && npm test",
+        "test:server": "cd server && python -m pytest",
+        "clean": "rm -rf plugin/dist server/__pycache__ **/*.pyc"
+    },
+    "devDependencies": {
+        "concurrently": "^8.2.0"
+    },
+    "engines": {
+        "node": ">=16.0.0",
+        "python": ">=3.8.0"
+    }
+} 
